@@ -20,37 +20,37 @@ public class Pyramid {
     }
 
     public static int countVisibleCharactersOfThePyramid(String characters) {
-        return 0;
+        return getVisibleCount(characters);
     }
 
     public static int countAllCharactersOfThePyramid(String characters) {
-        return getArray(characters);
+        return getTotalCount(characters);
     }
 
     public static int getLayers(String s) {
         return s.length();
     }
 
-    public static int getTotalCount(String s) {
-        var result = 0;
-        var count = 0;
-        var power = 1;
-        for (var c = 0; c < s.length(); c++) {
-            if (c == 0)
-                continue;
-            power += 2;
-            System.out.println("c = " + c);
-            System.out.println("power = " + power);
-            count += c + power;
+    public static int getTotalCount(String phrase) {
+        ArrayList<Pair<String, Integer>> list = getPairs(phrase);
+        int total;
 
-            System.out.println("count = " + count);
-            result += pow(power, 2);
-            System.out.println("result = " + result);
-        }
-        return result;
+        total = list.stream().mapToInt(Pair::getRight).sum();
+        return total;
     }
 
-    public static int getArray(String phrase) {
+    public static int getVisibleCount(String phrase) {
+        ArrayList<Pair<String, Integer>> list = getPairs(phrase);
+        int total;
+
+        total = list.stream().mapToInt(Pair::getRight).sum();
+        if (list.size() > 1)
+            list.remove(list.size() - 1);
+        var totalRemaining = list.stream().mapToInt(Pair::getRight).sum();
+        return total - totalRemaining;
+    }
+
+    private static ArrayList<Pair<String, Integer>> getPairs(String phrase) {
         var list = new ArrayList<Pair<String, Integer>>();
         var total = 0;
         final char[] chars = phrase.toCharArray();
@@ -62,8 +62,7 @@ public class Pyramid {
             list.add(pair);
             index += 2;
         }
-
-        total = list.stream().mapToInt(Pair::getRight).sum();
-        return total;
+        System.out.println("list = " + list);
+        return list;
     }
 }

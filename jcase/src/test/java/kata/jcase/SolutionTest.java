@@ -39,7 +39,7 @@ public class SolutionTest {
         String actualWatchFromSide = Pyramid.watchPyramidFromTheSide(characters);
         String actualWatchFromAbove = Pyramid.watchPyramidFromAbove(characters);
 //        visualisation(expectedWatchFromSide, expectedWatchFromAbove, actualWatchFromSide, actualWatchFromAbove);
-//        assertEquals(25, Pyramid.countVisibleCharactersOfThePyramid(characters));
+        assertEquals(25, Pyramid.countVisibleCharactersOfThePyramid(characters));
         assertEquals(35, Pyramid.countAllCharactersOfThePyramid(characters));
     }
 
@@ -47,12 +47,6 @@ public class SolutionTest {
     public void canBuildPyramid() {
         assertEquals(2, Pyramid.getLayers("*#"));
         assertEquals(10, Pyramid.getTotalCount("*#"));
-    }
-
-    @Test
-    public void canCreateArray() {
-        var result = Pyramid.getArray("*#");
-        assertEquals(10, Pyramid.getArray("*#"));
     }
 
     private void visualisation(String expectedWatchFromSide, String expectedWatchFromAbove, String actualWatchFromSide, String actualWatchFromAbove) {
