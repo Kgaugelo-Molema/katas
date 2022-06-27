@@ -6,13 +6,40 @@ import wiremock.org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.round;
+import static java.lang.Math.*;
 import static wiremock.com.github.jknack.handlebars.internal.lang3.ArrayUtils.reverse;
 
 public class Pyramid {
     public static String watchPyramidFromTheSide(String characters) {
-        return null;
+        var result = "";
+        final ArrayList<Pair<String, Integer>> list = Pyramid.getPairs(characters);
+        var max = list.stream().mapToInt(Pair::getRight).max();
+        System.out.println("max = " + max);
+        var maxsqrt = 0;
+        if (max.isPresent())
+            maxsqrt = (int) sqrt(max.getAsInt());
+        for (var ln: list) {
+            System.out.println("ln = " + ln);
+            var charCount = sqrt(ln.getRight());
+            var padding = maxsqrt - charCount;
+            System.out.println("padding = " + padding);
+            System.out.println("charCount = " + charCount);
+
+            var str = ln.getLeft();
+            for (var s = 1; s < charCount; s++) {
+                str += ln.getLeft();
+            }
+            while (padding > 0) {
+                str = " " + str + " ";
+                padding -= 2;
+            }
+            result += str;
+            if (list.indexOf(ln) < list.size() - 1)
+                result += '\n';
+            System.out.println("str = " + str);
+            System.out.println("result = \n" + result);
+        }
+        return result;
     }
 
     public static String watchPyramidFromAbove(String characters) {
