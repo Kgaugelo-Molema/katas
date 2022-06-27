@@ -50,11 +50,25 @@ public class SolutionTest {
         assertEquals(35, Pyramid.countAllCharactersOfThePyramid("abc"));
     }
 
+    @Test
+    public void canBuildRectangle() {
+        String characters = "abc";
+        String expectedWatchFromAbove =
+                "aaaaa\n" +
+                        "abbba\n" +
+                        "abcba\n" +
+                        "abbba\n" +
+                        "aaaaa";
+        String actualWatchFromAbove = Pyramid.watchPyramidFromAbove(characters);
+        assertEquals(expectedWatchFromAbove, actualWatchFromAbove);
+
+    }
+
     private void visualisation(String expectedWatchFromSide, String expectedWatchFromAbove, String actualWatchFromSide, String actualWatchFromAbove) {
         System.out.println("From side correct:\n" + expectedWatchFromSide);
-//        System.out.println("From above correct:\n" + expectedWatchFromAbove);
+        System.out.println("From above correct:\n" + expectedWatchFromAbove);
         System.out.println("From side yours:\n" + actualWatchFromSide);
-//        System.out.println("From above yours:\n" + actualWatchFromAbove);
+        System.out.println("From above yours:\n" + actualWatchFromAbove);
         assertEquals(expectedWatchFromSide, actualWatchFromSide);
 //        assertEquals(expectedWatchFromAbove, actualWatchFromAbove);
     }

@@ -43,7 +43,30 @@ public class Pyramid {
     }
 
     public static String watchPyramidFromAbove(String characters) {
-        return null;
+        var list = getPairs(characters);
+        var topBottomList = new ArrayList<String>();
+        for (var ln: list) {
+            var topBottom = "";
+            var sqrt = sqrt(ln.getRight());
+            for (var i = 1; i <= sqrt; i++) {
+                topBottom += ln.getLeft();
+            }
+            topBottomList.add(topBottom);
+            var sideToSide = "";
+            for (var i = 1; i <= sqrt; i++) {
+                sideToSide = ln.getLeft();
+                topBottomList.add(sideToSide);
+            }
+            for (var i = 1; i <= sqrt; i++) {
+                sideToSide = ln.getLeft();
+                topBottomList.add(sideToSide);
+            }
+            topBottomList.add(topBottom);
+        }
+        var result = String.join("\n", topBottomList);
+        System.out.println("result = " + result);
+
+        return result;
     }
 
     public static int countVisibleCharactersOfThePyramid(String characters) {
