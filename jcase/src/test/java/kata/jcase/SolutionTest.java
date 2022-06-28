@@ -70,6 +70,6 @@ public class SolutionTest {
         System.out.println("From side yours:\n" + actualWatchFromSide);
         System.out.println("From above yours:\n" + actualWatchFromAbove);
         assertEquals(expectedWatchFromSide, actualWatchFromSide);
-//        assertEquals(expectedWatchFromAbove, actualWatchFromAbove);
+        assertEquals(expectedWatchFromAbove, actualWatchFromAbove);
     }
 }
