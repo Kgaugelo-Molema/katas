@@ -5,6 +5,8 @@ import wiremock.org.apache.commons.lang3.tuple.ImmutablePair;
 import wiremock.org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import static java.lang.Math.*;
 import static wiremock.com.github.jknack.handlebars.internal.lang3.ArrayUtils.reverse;
@@ -18,7 +20,7 @@ public class Pyramid {
         var maxsqrt = 0;
         if (max.isPresent())
             maxsqrt = (int) sqrt(max.getAsInt());
-        for (var ln: list) {
+        for (var ln : list) {
             System.out.println("ln = " + ln);
             var charCount = sqrt(ln.getRight());
             var padding = maxsqrt - charCount;
@@ -45,7 +47,11 @@ public class Pyramid {
     public static String watchPyramidFromAbove(String characters) {
         var list = getPairs(characters);
         var topBottomList = new ArrayList<String>();
-        for (var ln: list) {
+        Collections.reverse(list);
+        var isNew = true;
+        var result = "";
+        var startIndex = 1;
+        for (var ln : list) {
             var topBottom = "";
             var sqrt = sqrt(ln.getRight());
             System.out.println("sqrt = " + sqrt);
@@ -53,14 +59,40 @@ public class Pyramid {
             for (var i = 1; i <= sqrt; i++) {
                 topBottom += ln.getLeft();
             }
-            for (var i = 1; i <= sqrt; i++) {
-                topBottomList.add(topBottom);
+            if (isNew) {
+                for (var i = 1; i <= sqrt; i++)
+                    topBottomList.add(topBottom);
+                isNew = false;
+                result = String.join("\n", topBottomList);
+                continue;
             }
+//            for (var i = 1; i <= sqrt; i++)
+                result = updateResult(result, startIndex++, topBottom);
         }
-        var result = String.join("\n", topBottomList);
         System.out.println("result = \n" + result);
 
         return result;
+    }
+
+    private static String updateResult(String result, int startIndex, String newText) {
+        var newResult = "";
+        var array = new ArrayList<>(Arrays.asList(result.split("\n")));
+        System.out.println("array = \n" + array);
+        System.out.println("newText = " + newText);
+        System.out.println("startIndex = " + startIndex);
+        for (var s = 0; s < array.size(); s++) {
+            var str = array.get(s);
+            if (s >= startIndex && s < startIndex + newText.length()) {
+                var buffer = new StringBuffer(str);
+                buffer.replace(startIndex, startIndex + newText.length(), newText);
+                newResult += buffer + "\n";
+                continue;
+            }
+            newResult += str;
+            if (s + 1 < array.size())
+                newResult += "\n";
+        }
+        return newResult;
     }
 
     public static int countVisibleCharactersOfThePyramid(String characters) {
@@ -96,13 +128,12 @@ public class Pyramid {
 
     private static ArrayList<Pair<String, Integer>> getPairs(String phrase) {
         var list = new ArrayList<Pair<String, Integer>>();
-        var total = 0;
         final char[] chars = phrase.toCharArray();
         var index = 1;
         reverse(chars);
         for (var s : chars) {
             var pow = pow(index, 2);
-            var pair = new ImmutablePair<>(String.valueOf(s), (int)pow);
+            var pair = new ImmutablePair<>(String.valueOf(s), (int) pow);
             list.add(pair);
             index += 2;
         }
