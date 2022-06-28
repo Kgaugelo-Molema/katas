@@ -48,23 +48,17 @@ public class Pyramid {
         for (var ln: list) {
             var topBottom = "";
             var sqrt = sqrt(ln.getRight());
+            System.out.println("sqrt = " + sqrt);
+
             for (var i = 1; i <= sqrt; i++) {
                 topBottom += ln.getLeft();
             }
-            topBottomList.add(topBottom);
-            var sideToSide = "";
             for (var i = 1; i <= sqrt; i++) {
-                sideToSide = ln.getLeft();
-                topBottomList.add(sideToSide);
+                topBottomList.add(topBottom);
             }
-            for (var i = 1; i <= sqrt; i++) {
-                sideToSide = ln.getLeft();
-                topBottomList.add(sideToSide);
-            }
-            topBottomList.add(topBottom);
         }
         var result = String.join("\n", topBottomList);
-        System.out.println("result = " + result);
+        System.out.println("result = \n" + result);
 
         return result;
     }
